@@ -51,11 +51,39 @@ export default function Navbar() {
 
       {isOpen && (
         <div className="md:hidden border-b border-slate-200 bg-white px-4 pt-2 pb-6 space-y-3 text-slate-900">
-          <Link href="/" className="block py-2 text-sm font-medium">Inicio</Link>
-          <Link href="/productos" className="block py-2 text-sm font-medium">Productos y Servicios</Link>
-          <Link href="/empresa" className="block py-2 text-sm font-medium">Empresa</Link>
-          <Link href="/proyectos" className="block py-2 text-sm font-medium">Proyectos</Link>
-          <Link href="/contacto" className="block w-full text-center bg-amber-500 text-slate-950 py-2.5 rounded-lg font-bold text-sm">
+          <Link 
+            href="/" 
+            onClick={() => setIsOpen(false)} 
+            className="block py-2 text-sm font-medium"
+          >
+            Inicio
+          </Link>
+          <Link 
+            href="/productos" 
+            onClick={() => setIsOpen(false)} 
+            className="block py-2 text-sm font-medium"
+          >
+            Productos y Servicios
+          </Link>
+          <Link 
+            href="/empresa" 
+            onClick={() => setIsOpen(false)} 
+            className="block py-2 text-sm font-medium"
+          >
+            Empresa
+          </Link>
+          <Link 
+            href="/proyectos" 
+            onClick={() => setIsOpen(false)} 
+            className="block py-2 text-sm font-medium"
+          >
+            Proyectos
+          </Link>
+          <Link 
+            href="/contacto" 
+            onClick={() => setIsOpen(false)} 
+            className="block w-full text-center bg-amber-500 text-slate-950 py-2.5 rounded-lg font-bold text-sm"
+          >
             Contactar
           </Link>
         </div>
