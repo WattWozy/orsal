@@ -393,7 +393,7 @@
         },
         {
           "id": "PUE-GIR-1H",
-          "name": "1 hoja",
+          "name": "Puerta giratoria 1 hoja",
           "description": "Añadir dimensiones y configuración",
           "family": "Puertas",
           "subfamily": "Giratorias",
@@ -423,7 +423,7 @@
         },
         {
           "id": "PUE-COR-1H",
-          "name": "1 hoja",
+          "name": "Puerta corredera 1 hoja",
           "description": "Añadir dimensiones, guía, ruedas y motor si procede",
           "family": "Puertas",
           "subfamily": "Correderas",
