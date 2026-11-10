@@ -66,11 +66,6 @@ export default function ProductosPage() {
                     </div>
 
                     <div className="pt-4 border-t border-slate-200 flex items-center justify-between">
-                      <span className="text-xs font-bold text-slate-900">
-                        {prod.basePricePerMeter
-                          ? `Desde ${prod.basePricePerMeter} €/m`
-                          : `Desde ${prod.basePriceUnit} €/ud`}
-                      </span>
                       <Link
                         href={`/contacto?producto=${encodeURIComponent(prod.name)}`}
                         className="text-xs font-bold text-amber-600 hover:text-amber-700 uppercase tracking-wider"
