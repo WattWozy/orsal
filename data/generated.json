@@ -1,0 +1,512 @@
+{
+  "generatedAt": "2026-11-10T17:56:32.665Z",
+  "currency": "EUR",
+  "pricing": {
+    "laborRate": 22,
+    "margin": 0.3
+  },
+  "families": [
+    {
+      "id": "vallas",
+      "title": "Vallas",
+      "products": [
+        {
+          "id": "VAL-MAL-SIM",
+          "name": "Simple torsión",
+          "description": "Malla simple torsión",
+          "family": "Vallas",
+          "subfamily": "Mallas",
+          "unit": "m²",
+          "pricingConfigured": true,
+          "components": [
+            {
+              "materialId": "MAT003",
+              "name": "Malla simple torsión",
+              "quantity": 1,
+              "waste": 0.05,
+              "unit": "m²",
+              "unitPrice": 5.5,
+              "totalCost": 5.775
+            },
+            {
+              "materialId": "MAT013",
+              "name": "Poste metálico (prorrateo por m²)",
+              "quantity": 0.25,
+              "waste": 0.05,
+              "unit": "ud",
+              "unitPrice": 18,
+              "totalCost": 4.7250000000000005
+            },
+            {
+              "materialId": "MAT021",
+              "name": "Fijaciones (prorrateo)",
+              "quantity": 0.5,
+              "waste": 0.05,
+              "unit": "ud",
+              "unitPrice": 1.5,
+              "totalCost": 0.7875000000000001
+            },
+            {
+              "materialId": "MAT025",
+              "name": "Consumibles",
+              "quantity": 0.5,
+              "waste": 0,
+              "unit": "ud",
+              "unitPrice": 2,
+              "totalCost": 1
+            }
+          ],
+          "materialCost": 12.29,
+          "laborCost": 44,
+          "costPrice": 56.29,
+          "salePrice": 73.17,
+          "laborHours": 2
+        },
+        {
+          "id": "VAL-MAL-GAN",
+          "name": "Ganadera",
+          "description": "Malla ganadera",
+          "family": "Vallas",
+          "subfamily": "Mallas",
+          "unit": "m²",
+          "pricingConfigured": false,
+          "components": [],
+          "materialCost": 0,
+          "laborCost": 44,
+          "costPrice": 44,
+          "salePrice": null,
+          "laborHours": 2
+        },
+        {
+          "id": "VAL-MAL-TRI",
+          "name": "Triple torsión",
+          "description": "Malla triple torsión",
+          "family": "Vallas",
+          "subfamily": "Mallas",
+          "unit": "m²",
+          "pricingConfigured": false,
+          "components": [],
+          "materialCost": 0,
+          "laborCost": 44,
+          "costPrice": 44,
+          "salePrice": null,
+          "laborHours": 2
+        },
+        {
+          "id": "VAL-VER-EPL",
+          "name": "Electrosoldada (plegada)",
+          "description": "Panel rígido plegado",
+          "family": "Vallas",
+          "subfamily": "Verjas",
+          "unit": "m²",
+          "pricingConfigured": true,
+          "components": [
+            {
+              "materialId": "MAT006",
+              "name": "Panel electrosoldado plegado",
+              "quantity": 1,
+              "waste": 0.05,
+              "unit": "m²",
+              "unitPrice": 13.5,
+              "totalCost": 14.175
+            },
+            {
+              "materialId": "MAT013",
+              "name": "Poste metálico (prorrateo por m²)",
+              "quantity": 0.25,
+              "waste": 0.05,
+              "unit": "ud",
+              "unitPrice": 18,
+              "totalCost": 4.7250000000000005
+            },
+            {
+              "materialId": "MAT021",
+              "name": "Fijaciones",
+              "quantity": 0.5,
+              "waste": 0.05,
+              "unit": "ud",
+              "unitPrice": 1.5,
+              "totalCost": 0.7875000000000001
+            },
+            {
+              "materialId": "MAT025",
+              "name": "Consumibles",
+              "quantity": 0.7,
+              "waste": 0,
+              "unit": "ud",
+              "unitPrice": 2,
+              "totalCost": 1.4
+            }
+          ],
+          "materialCost": 21.09,
+          "laborCost": 44,
+          "costPrice": 65.09,
+          "salePrice": 84.61,
+          "laborHours": 2
+        },
+        {
+          "id": "VAL-VER-ENM",
+          "name": "Enmarcada",
+          "description": "Verja enmarcada; configurar marco y relleno",
+          "family": "Vallas",
+          "subfamily": "Verjas",
+          "unit": "m²",
+          "pricingConfigured": false,
+          "components": [],
+          "materialCost": 0,
+          "laborCost": 44,
+          "costPrice": 44,
+          "salePrice": null,
+          "laborHours": 2
+        },
+        {
+          "id": "VAL-VER-MAL",
+          "name": "Mallazo",
+          "description": "Verja con relleno de mallazo",
+          "family": "Vallas",
+          "subfamily": "Verjas",
+          "unit": "m²",
+          "pricingConfigured": false,
+          "components": [],
+          "materialCost": 0,
+          "laborCost": 44,
+          "costPrice": 44,
+          "salePrice": null,
+          "laborHours": 2
+        },
+        {
+          "id": "VAL-VER-BAR",
+          "name": "Barrotes verticales",
+          "description": "Verja de barrotes",
+          "family": "Vallas",
+          "subfamily": "Verjas",
+          "unit": "m²",
+          "pricingConfigured": false,
+          "components": [],
+          "materialCost": 0,
+          "laborCost": 44,
+          "costPrice": 44,
+          "salePrice": null,
+          "laborHours": 2
+        },
+        {
+          "id": "VAL-VER-MIC",
+          "name": "Microperforada",
+          "description": "Verja microperforada",
+          "family": "Vallas",
+          "subfamily": "Verjas",
+          "unit": "m²",
+          "pricingConfigured": false,
+          "components": [],
+          "materialCost": 0,
+          "laborCost": 44,
+          "costPrice": 44,
+          "salePrice": null,
+          "laborHours": 2
+        },
+        {
+          "id": "VAL-VER-DEP",
+          "name": "Deployé",
+          "description": "Verja deployé",
+          "family": "Vallas",
+          "subfamily": "Verjas",
+          "unit": "m²",
+          "pricingConfigured": false,
+          "components": [],
+          "materialCost": 0,
+          "laborCost": 44,
+          "costPrice": 44,
+          "salePrice": null,
+          "laborHours": 2
+        },
+        {
+          "id": "VAL-TUB-V",
+          "name": "Tubos verticales",
+          "description": "Definir separación y sección",
+          "family": "Vallas",
+          "subfamily": "Tubos verticales",
+          "unit": "m²",
+          "pricingConfigured": false,
+          "components": [],
+          "materialCost": 0,
+          "laborCost": 44,
+          "costPrice": 44,
+          "salePrice": null,
+          "laborHours": 2
+        }
+      ]
+    },
+    {
+      "id": "puertas",
+      "title": "Puertas",
+      "products": [
+        {
+          "id": "PUE-PEA-MAL",
+          "name": "Mallazo",
+          "description": "Puerta peatonal",
+          "family": "Puertas",
+          "subfamily": "Peatonal",
+          "unit": "ud",
+          "pricingConfigured": true,
+          "components": [
+            {
+              "materialId": "MAT012",
+              "name": "Tubo/perfil marco (kg por puerta)",
+              "quantity": 12,
+              "waste": 0.05,
+              "unit": "kg",
+              "unitPrice": 2,
+              "totalCost": 25.200000000000003
+            },
+            {
+              "materialId": "MAT007",
+              "name": "Mallazo (m² por puerta estándar)",
+              "quantity": 1.8,
+              "waste": 0.05,
+              "unit": "m²",
+              "unitPrice": 9,
+              "totalCost": 17.01
+            },
+            {
+              "materialId": "MAT014",
+              "name": "Bisagras",
+              "quantity": 2,
+              "waste": 0,
+              "unit": "ud",
+              "unitPrice": 8,
+              "totalCost": 16
+            },
+            {
+              "materialId": "MAT015",
+              "name": "Cerradura y manilla",
+              "quantity": 1,
+              "waste": 0,
+              "unit": "ud",
+              "unitPrice": 28,
+              "totalCost": 28
+            },
+            {
+              "materialId": "MAT021",
+              "name": "Tornillería/fijaciones",
+              "quantity": 1,
+              "waste": 0,
+              "unit": "ud",
+              "unitPrice": 1.5,
+              "totalCost": 1.5
+            }
+          ],
+          "materialCost": 87.71,
+          "laborCost": 44,
+          "costPrice": 131.71,
+          "salePrice": 171.22,
+          "laborHours": 2
+        },
+        {
+          "id": "PUE-PEA-BAR",
+          "name": "Barrotes verticales",
+          "description": "Puerta peatonal",
+          "family": "Puertas",
+          "subfamily": "Peatonal",
+          "unit": "ud",
+          "pricingConfigured": false,
+          "components": [],
+          "materialCost": 0,
+          "laborCost": 44,
+          "costPrice": 44,
+          "salePrice": null,
+          "laborHours": 2
+        },
+        {
+          "id": "PUE-PEA-CHL",
+          "name": "Chapa lisa",
+          "description": "Puerta peatonal",
+          "family": "Puertas",
+          "subfamily": "Peatonal",
+          "unit": "ud",
+          "pricingConfigured": false,
+          "components": [],
+          "materialCost": 0,
+          "laborCost": 44,
+          "costPrice": 44,
+          "salePrice": null,
+          "laborHours": 2
+        },
+        {
+          "id": "PUE-PEA-CHB",
+          "name": "Chapa + barrotes",
+          "description": "Puerta peatonal",
+          "family": "Puertas",
+          "subfamily": "Peatonal",
+          "unit": "ud",
+          "pricingConfigured": false,
+          "components": [],
+          "materialCost": 0,
+          "laborCost": 44,
+          "costPrice": 44,
+          "salePrice": null,
+          "laborHours": 2
+        },
+        {
+          "id": "PUE-PEA-CHM",
+          "name": "Chapa + mallazo",
+          "description": "Puerta peatonal",
+          "family": "Puertas",
+          "subfamily": "Peatonal",
+          "unit": "ud",
+          "pricingConfigured": false,
+          "components": [],
+          "materialCost": 0,
+          "laborCost": 44,
+          "costPrice": 44,
+          "salePrice": null,
+          "laborHours": 2
+        },
+        {
+          "id": "PUE-PEA-MIC",
+          "name": "Microperforada",
+          "description": "Puerta peatonal",
+          "family": "Puertas",
+          "subfamily": "Peatonal",
+          "unit": "ud",
+          "pricingConfigured": false,
+          "components": [],
+          "materialCost": 0,
+          "laborCost": 44,
+          "costPrice": 44,
+          "salePrice": null,
+          "laborHours": 2
+        },
+        {
+          "id": "PUE-PEA-DEP",
+          "name": "Deployé",
+          "description": "Puerta peatonal",
+          "family": "Puertas",
+          "subfamily": "Peatonal",
+          "unit": "ud",
+          "pricingConfigured": false,
+          "components": [],
+          "materialCost": 0,
+          "laborCost": 44,
+          "costPrice": 44,
+          "salePrice": null,
+          "laborHours": 2
+        },
+        {
+          "id": "PUE-GIR-1H",
+          "name": "1 hoja",
+          "description": "Añadir dimensiones y configuración",
+          "family": "Puertas",
+          "subfamily": "Giratorias",
+          "unit": "ud",
+          "pricingConfigured": false,
+          "components": [],
+          "materialCost": 0,
+          "laborCost": 44,
+          "costPrice": 44,
+          "salePrice": null,
+          "laborHours": 2
+        },
+        {
+          "id": "PUE-GIR-2H",
+          "name": "2 hojas",
+          "description": "Añadir dimensiones y configuración",
+          "family": "Puertas",
+          "subfamily": "Giratorias",
+          "unit": "ud",
+          "pricingConfigured": false,
+          "components": [],
+          "materialCost": 0,
+          "laborCost": 44,
+          "costPrice": 44,
+          "salePrice": null,
+          "laborHours": 2
+        },
+        {
+          "id": "PUE-COR-1H",
+          "name": "1 hoja",
+          "description": "Añadir dimensiones, guía, ruedas y motor si procede",
+          "family": "Puertas",
+          "subfamily": "Correderas",
+          "unit": "ud",
+          "pricingConfigured": true,
+          "components": [
+            {
+              "materialId": "MAT012",
+              "name": "Estructura hoja (kg)",
+              "quantity": 35,
+              "waste": 0.05,
+              "unit": "kg",
+              "unitPrice": 2,
+              "totalCost": 73.5
+            },
+            {
+              "materialId": "MAT017",
+              "name": "Guía/carril (m)",
+              "quantity": 4,
+              "waste": 0,
+              "unit": "m",
+              "unitPrice": 18,
+              "totalCost": 72
+            },
+            {
+              "materialId": "MAT018",
+              "name": "Ruedas",
+              "quantity": 2,
+              "waste": 0,
+              "unit": "ud",
+              "unitPrice": 22,
+              "totalCost": 44
+            },
+            {
+              "materialId": "MAT015",
+              "name": "Cerradura",
+              "quantity": 1,
+              "waste": 0,
+              "unit": "ud",
+              "unitPrice": 28,
+              "totalCost": 28
+            },
+            {
+              "materialId": "MAT019",
+              "name": "Motor (si motorizada)",
+              "quantity": 1,
+              "waste": 0,
+              "unit": "ud",
+              "unitPrice": 260,
+              "totalCost": 260
+            },
+            {
+              "materialId": "MAT021",
+              "name": "Fijaciones",
+              "quantity": 2,
+              "waste": 0,
+              "unit": "ud",
+              "unitPrice": 1.5,
+              "totalCost": 3
+            }
+          ],
+          "materialCost": 480.5,
+          "laborCost": 44,
+          "costPrice": 524.5,
+          "salePrice": 681.85,
+          "laborHours": 2
+        },
+        {
+          "id": "PUE-COR-2H",
+          "name": "2 hojas",
+          "description": "Añadir dimensiones, guía, ruedas y motor si procede",
+          "family": "Puertas",
+          "subfamily": "Correderas",
+          "unit": "ud",
+          "pricingConfigured": false,
+          "components": [],
+          "materialCost": 0,
+          "laborCost": 44,
+          "costPrice": 44,
+          "salePrice": null,
+          "laborHours": 2
+        }
+      ]
+    }
+  ]
+}

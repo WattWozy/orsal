@@ -1,22 +1,36 @@
 'use client';
 
 import { useState } from 'react';
-import { CATALOG_FAMILIES, SpecificProduct } from '@/data/catalog';
+import { CATALOG_FAMILIES, type Unit } from '@/data/catalog';
+
+const INSTALLATION_FACTOR = 0.35;
+
+const QUANTITY_LABEL: Record<Unit, string> = {
+  m: 'Metros Lineales (m)',
+  'm²': 'Superficie (m²)',
+  ud: 'Unidades',
+};
 
 export default function PriceCalculator() {
   const allProducts = CATALOG_FAMILIES.flatMap((f) => f.products);
-  const [selectedProductId, setSelectedProductId] = useState<string>(allProducts[0].id);
-  const [quantity, setQuantity] = useState<number>(50); // Metros o unidades
+  const firstPriced = allProducts.find((p) => p.pricingConfigured) ?? allProducts[0];
+
+  const [selectedProductId, setSelectedProductId] = useState<string>(firstPriced?.id ?? '');
+  const [quantity, setQuantity] = useState<number>(50);
   const [includeInstallation, setIncludeInstallation] = useState<boolean>(true);
 
-  const product = allProducts.find((p) => p.id === selectedProductId) || allProducts[0];
-  const isMeterBased = product.basePricePerMeter !== undefined;
-  const unitPrice = isMeterBased ? product.basePricePerMeter! : product.basePriceUnit!;
-  
-  // Cálculo estimado: Si incluye instalación, aplicamos un factor de mano de obra/cimentación (+35%)
+  const product = allProducts.find((p) => p.id === selectedProductId) ?? firstPriced;
+  if (!product) return null;
+
+  const hasPrice = product.pricingConfigured && product.salePrice != null;
+  const unitPrice = product.salePrice ?? 0;
+
   const materialCost = unitPrice * quantity;
-  const installationCost = includeInstallation ? materialCost * 0.35 : 0;
+  const installationCost = includeInstallation ? materialCost * INSTALLATION_FACTOR : 0;
   const totalEstimate = materialCost + installationCost;
+
+  const eur = (n: number) =>
+    n.toLocaleString('es-ES', { maximumFractionDigits: 0 });
 
   return (
     <div className="bg-slate-900 text-white p-8 rounded-2xl border border-slate-800 shadow-xl">
@@ -31,7 +45,6 @@ export default function PriceCalculator() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        {/* Selector de producto */}
         <div>
           <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
             Seleccionar Producto
@@ -44,8 +57,9 @@ export default function PriceCalculator() {
             {CATALOG_FAMILIES.map((family) => (
               <optgroup key={family.id} label={family.title}>
                 {family.products.map((p) => (
-                  <option key={p.id} value={p.id}>
+                  <option key={p.id} value={p.id} disabled={!p.pricingConfigured}>
                     {p.name}
+                    {!p.pricingConfigured ? ' (consultar)' : ''}
                   </option>
                 ))}
               </optgroup>
@@ -53,21 +67,19 @@ export default function PriceCalculator() {
           </select>
         </div>
 
-        {/* Cantidad (Metros o Unidades) */}
         <div>
           <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
-            {isMeterBased ? 'Metros Lineales (m)' : 'Unidades'}
+            {QUANTITY_LABEL[product.unit]}
           </label>
           <input
             type="number"
             min={1}
             value={quantity}
-            onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
+            onChange={(e) => setQuantity(Math.max(1, Number(e.target.value) || 1))}
             className="w-full bg-slate-800 border border-slate-700 text-white rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-amber-500"
           />
         </div>
 
-        {/* Opción de Montaje */}
         <div>
           <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
             Servicio de Montaje
@@ -87,16 +99,22 @@ export default function PriceCalculator() {
         </div>
       </div>
 
-      {/* Resultados orientativos */}
       <div className="bg-slate-950 p-6 rounded-xl border border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
         <div>
           <span className="text-xs text-slate-400 block">Estimación orientativa (IVA no incl.):</span>
-          <div className="text-3xl font-black text-amber-500">
-            ~ {totalEstimate.toLocaleString('es-ES', { maximumFractionDigits: 0 })} €
-          </div>
-          <span className="text-[11px] text-slate-500">
-            {materialCost.toFixed(0)}€ material {includeInstallation ? `+ ${installationCost.toFixed(0)}€ montaje` : ''}
-          </span>
+          {hasPrice ? (
+            <>
+              <div className="text-3xl font-black text-amber-500">~ {eur(totalEstimate)} €</div>
+              <span className="text-[11px] text-slate-500">
+                {eur(materialCost)}€ material
+                {includeInstallation ? ` + ${eur(installationCost)}€ montaje` : ''}
+                {' · '}
+                {product.salePrice!.toFixed(2)} €/{product.unit}
+              </span>
+            </>
+          ) : (
+            <div className="text-xl font-bold text-slate-300">Precio bajo consulta</div>
+          )}
         </div>
 
         <a

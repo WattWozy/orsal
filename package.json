@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "generate:catalog": "node scripts/generate-catalog.mjs ./Cercados_Orsal_calculadora_presupuestos.xlsx"
   },
   "dependencies": {
     "next": "16.4.6",
