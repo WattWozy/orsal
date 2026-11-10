@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { CATEGORIES } from '@/data/catalog';
+import { CATALOG_FAMILIES } from '@/data/catalog';
 
 export default function HomePage() {
   return (
@@ -36,7 +36,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Grid de Productos/Servicios con Fondo Gris Claro Fijo y Tarjetas Blancas */}
+      {/* Grid de Productos/Servicios con Enlaces al Catálogo Detallado */}
       <section className="py-24 bg-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
@@ -49,38 +49,42 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {CATEGORIES.map((cat) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {CATALOG_FAMILIES.map((family) => (
               <div 
-                key={cat.id} 
+                key={family.id} 
                 className="bg-white p-8 rounded-xl border border-slate-300 shadow-md hover:shadow-xl hover:border-amber-500 transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
                   <div className="w-10 h-1 rounded bg-amber-500 mb-6 group-hover:w-16 transition-all duration-300" />
                   
-                  <h3 className="text-xl font-bold text-slate-900 mb-3 tracking-tight">
-                    {cat.title}
+                  <h3 className="text-xl font-bold text-slate-900 mb-2 tracking-tight">
+                    {family.title}
                   </h3>
                   
+                  <p className="text-slate-700 text-xs font-semibold text-amber-700 mb-4">
+                    {family.tagline}
+                  </p>
+
                   <p className="text-slate-700 text-sm mb-6 leading-relaxed">
-                    {cat.description}
+                    {family.description}
                   </p>
                   
-                  <ul className="space-y-2.5 mb-8 border-t border-slate-200 pt-6">
-                    {cat.features.map((feat, idx) => (
-                      <li key={idx} className="text-xs font-semibold text-slate-800 flex items-center gap-2.5">
+                  <ul className="space-y-2 mb-8 border-t border-slate-200 pt-6">
+                    {family.products.map((prod) => (
+                      <li key={prod.id} className="text-xs font-semibold text-slate-800 flex items-center gap-2.5">
                         <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
-                        {feat}
+                        {prod.name}
                       </li>
                     ))}
                   </ul>
                 </div>
 
                 <Link 
-                  href={`/productos#${cat.id}`}
+                  href={`/productos#${family.id}`}
                   className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-900 group-hover:text-amber-600 transition-colors"
                 >
-                  <span>Más información</span>
+                  <span>Ver modelos y precios</span>
                   <span className="transform group-hover:translate-x-1 transition-transform">&rarr;</span>
                 </Link>
               </div>
