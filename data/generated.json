@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-10T17:56:32.665Z",
+  "generatedAt": "2026-11-10T22:33:35.488Z",
   "currency": "EUR",
   "pricing": {
     "laborRate": 22,
@@ -393,7 +393,7 @@
         },
         {
           "id": "PUE-GIR-1H",
-          "name": "Puerta giratoria 1 hoja",
+          "name": "Giratoria de 1 hoja",
           "description": "Añadir dimensiones y configuración",
           "family": "Puertas",
           "subfamily": "Giratorias",
@@ -408,7 +408,7 @@
         },
         {
           "id": "PUE-GIR-2H",
-          "name": "2 hojas",
+          "name": "Giratoria de 2 hojas",
           "description": "Añadir dimensiones y configuración",
           "family": "Puertas",
           "subfamily": "Giratorias",
@@ -423,7 +423,7 @@
         },
         {
           "id": "PUE-COR-1H",
-          "name": "Puerta corredera 1 hoja",
+          "name": "Corredera de 1 hoja",
           "description": "Añadir dimensiones, guía, ruedas y motor si procede",
           "family": "Puertas",
           "subfamily": "Correderas",
@@ -493,7 +493,7 @@
         },
         {
           "id": "PUE-COR-2H",
-          "name": "2 hojas",
+          "name": "Corrdereda de 2 hojas",
           "description": "Añadir dimensiones, guía, ruedas y motor si procede",
           "family": "Puertas",
           "subfamily": "Correderas",

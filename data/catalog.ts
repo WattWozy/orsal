@@ -2,22 +2,57 @@ import generated from "@/src/data/generated.json";
 
 export type Unit = "m" | "m²" | "ud";
 
+export type PricingType = 'linear' | 'area';
+
+export const DOOR_AVAILABLE_HEIGHTS = [1.0, 1.2, 1.5, 1.75, 2.0];
+export const FENCE_AVAILABLE_HEIGHTS = [1.0, 1.2, 1.5, 1.75, 2.0, 2.5, 3.0, 3.5, 4.0];
+
+export interface Product {
+  id: string;
+  name: string;
+  pricingConfigured: boolean;
+  pricingType: PricingType;
+  // Si es 'linear': mapa de altura (en metros) -> precio por metro lineal
+  priceByHeight?: Record<number, number>;
+  // Si es 'area': precio por m² (ancho * alto)
+  pricePerSqm?: number;
+  minSqm?: number; // Ej: mínimo 2 m² para puertas pequeñas
+}
+
+export interface ComponentItem {
+  materialId: string;
+  name: string;
+  quantity: number;
+  waste: number;
+  unit: string;
+  unitPrice: number;
+  totalCost: number;
+}
+
 export interface SpecificProduct {
   id: string;
   name: string;
   description: string;
+  family: string;
+  subfamily: string;
   specs: string[];
   requiresAssembly?: boolean;
   unit: Unit;
   pricingConfigured: boolean;
   salePrice: number | null;
+  // Campos clave que vienen del JSON del Excel:
+  components: ComponentItem[];
+  materialCost: number;
+  laborCost: number;
+  costPrice: number;
+  laborHours: number;
 }
 
 export interface ProductCategory {
   id: string;
   title: string;
-  tagline: string;
-  description: string;
+  tagline?: string;
+  description?: string;
   products: SpecificProduct[];
 }
 
@@ -25,9 +60,16 @@ interface GeneratedProduct {
   id: string;
   name: string;
   description?: string | null;
+  family?: string | null;
+  subfamily?: string | null;
   unit?: string | null;
   pricingConfigured: boolean;
   salePrice: number | null;
+  components?: ComponentItem[];
+  materialCost?: number;
+  laborCost?: number;
+  costPrice?: number;
+  laborHours?: number;
 }
 
 interface GeneratedFamily {
@@ -90,11 +132,19 @@ export const CATALOG_FAMILIES: ProductCategory[] = data.families.map((family) =>
       id: p.id,
       name: p.name,
       description: p.description ?? "",
+      family: p.family ?? family.title,
+      subfamily: p.subfamily ?? "",
       specs: PRODUCT_META[p.id]?.specs ?? [],
       requiresAssembly: PRODUCT_META[p.id]?.requiresAssembly,
       unit: normalizeUnit(p.unit),
       pricingConfigured: p.pricingConfigured && p.salePrice != null,
       salePrice: p.salePrice,
+      // Propagamos los datos de costes y componentes directamente del JSON:
+      components: p.components ?? [],
+      materialCost: p.materialCost ?? 0,
+      laborCost: p.laborCost ?? 0,
+      costPrice: p.costPrice ?? 0,
+      laborHours: p.laborHours ?? 0,
     })),
   };
 });
