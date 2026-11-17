@@ -1,11 +1,14 @@
-import type { Product, Values } from "../lib/types";
-import { fmt, makeScene, Svg, HDim, Ground, Leaf } from "../lib/scene";
-import { PW, DoorHeights, heightsStrip, doorHeightsOutputs, doorClient } from "../lib/puertas";
+import type { ReactElement } from "react";
+import type { Values } from "@/domain/models/product";
+import { fmt, makeScene, Svg, HDim, Ground, Leaf } from "@/lib/scene";
+import { PW, DoorHeights } from "@/lib/puertas";
 
-/** Puerta corredera de 2 hojas. */
+interface Slide2DrawingProps {
+  v: Values;
+  o: Values;
+}
 
-/* ---- Corredera 2 hojas ---- */
-function Slide2Drawing({ v, o }: { v: Values; o: Values }) {
+export function Slide2Drawing({ v, o }: Slide2DrawingProps): ReactElement {
   const minX = Math.min(-o.esp, -PW);
   const maxX = Math.max(v.W + o.esp, v.W + PW);
   const sc = makeScene(minX, maxX, v.H, 0, 4, 0, 2);
@@ -15,6 +18,7 @@ function Slide2Drawing({ v, o }: { v: Values; o: Values }) {
   const bL = mid + v.sc / 2;
   const aR = mid - v.sc / 2;
   const bR = v.W + v.sp;
+
   return (
     <Svg sc={sc}>
       <Ground x1={X(minX) - 14} x2={X(maxX) + 14} y={Y(0)} />
@@ -35,42 +39,3 @@ function Slide2Drawing({ v, o }: { v: Values; o: Values }) {
     </Svg>
   );
 }
-
-export const corredera2: Product = {
-  id: "corredera-2",
-  family: "Puertas",
-  label: "Corredera 2 hojas",
-  client: doorClient,
-  margins: [
-    { key: "sp", label: "Solape sobre cada pilar" },
-    { key: "sc", label: "Solape central entre hojas", hint: "negativo = separación" },
-    { key: "hi", label: "Holgura inferior (suelo)" },
-    { key: "hs", label: "Holgura superior" },
-    { key: "ml", label: "Margen lateral de apertura" },
-  ],
-  defaults: { W: 6000, H: 2000, sp: 150, sc: 50, hi: 50, hs: 30, ml: 100 },
-  compute: (v) => {
-    const wh = (v.W + 2 * v.sp + v.sc) / 2;
-    return { wh, ah: v.H - v.hi - v.hs, esp: wh + v.ml };
-  },
-  outputs: [
-    { key: "wh", label: "Largo de cada hoja", unit: "mm", main: true },
-    ...doorHeightsOutputs,
-    { key: "esp", label: "Espacio lateral necesario por lado", unit: "mm" },
-  ],
-  checks: ["wh", "ah"],
-  Drawing: Slide2Drawing,
-  strips: (v, o) => [
-    {
-      title: "Hueco y solapes (esquema, no a escala)",
-      segs: [
-        { label: "Solape pilar", mm: v.sp, kind: "holgura" },
-        { label: "Medio hueco", mm: v.W / 2, kind: "hoja" },
-        { label: "Solape central", mm: Math.abs(v.sc), kind: "holgura" },
-        { label: "Medio hueco", mm: v.W / 2, kind: "hoja" },
-        { label: "Solape pilar", mm: v.sp, kind: "holgura" },
-      ],
-    },
-    heightsStrip(v, o),
-  ],
-};

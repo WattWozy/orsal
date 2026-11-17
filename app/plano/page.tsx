@@ -1,14 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import type { Field, Values } from "./lib/types";
-import { StripSvg, fmt } from "./lib/scene";
-import { PRODUCTS } from "./productos";
-
-import { MAX_DRAW_POSTS, type OrderMetadata } from "./util/orderTypes";
-import { localDateValue } from "./util/dateHelpers";
-import { shareOrDownloadImage } from "./util/svgExport";
-import { VISUALIZER_CSS } from "./util/visualizerStyles";
+import type { Field } from "@/domain/models/product";
+import { PRODUCTS } from "@/domain/catalog";
+import { getProductDrawing } from "./renderers";
+import { useVisualizerState } from "./hooks/useVisualizerState";
+import { VISUALIZER_CSS } from "@/util/visualizerStyles";
+import { StripSvg, fmt } from "@/lib/scene";
+import { MAX_DRAW_POSTS } from "@/domain/calculations/evaluateProduct";
 
 function NumInput({
   value,
@@ -39,81 +37,24 @@ function NumInput({
 }
 
 export default function ProductVisualizerPage() {
-  const [order, setOrder] = useState<OrderMetadata>({
-    orderDate: "",
-    deliveryDate: "",
-    customerName: "",
-    location: "",
-    notes: "",
-  });
+  const {
+    order,
+    updateOrder,
+    product,
+    productId,
+    setProductId,
+    v,
+    evaluation,
+    wrapRef,
+    isExporting,
+    setField,
+    resetValues,
+    handleShare,
+  } = useVisualizerState();
 
-  useEffect(() => {
-    setOrder((prev) =>
-      prev.orderDate ? prev : { ...prev, orderDate: localDateValue() }
-    );
-  }, []);
-
-  const [productId, setProductId] = useState(PRODUCTS[0].id);
-
-  const [all, setAll] = useState<Record<string, Values>>(() =>
-    Object.fromEntries(PRODUCTS.map((p) => [p.id, { ...p.defaults }]))
-  );
-
-  const [isExporting, setIsExporting] = useState(false);
-
-  const wrapRef = useRef<HTMLDivElement>(null);
-
-  const product = PRODUCTS.find((p) => p.id === productId) ?? PRODUCTS[0];
-  const v = all[product.id];
-
-  const inputKeys = [...product.client, ...product.margins].map((f) => f.key);
-  const inputsOk = inputKeys.every((k) => Number.isFinite(v[k]));
-
-  const o = useMemo(
-    () => (inputsOk ? product.compute(v) : {}),
-    [product, v, inputsOk]
-  );
-
-  const checksOk =
-    inputsOk && product.checks.every((k) => Number.isFinite(o[k]) && o[k] > 0);
-
-  const tooMany =
-    product.family === "Vallas" && Number.isFinite(o.n) && o.n > MAX_DRAW_POSTS;
-
-  const canDraw = checksOk && !tooMany;
-
-  const set = (k: string, n: number) =>
-    setAll((prev) => ({
-      ...prev,
-      [product.id]: { ...prev[product.id], [k]: n },
-    }));
-
-  const reset = () =>
-    setAll((prev) => ({
-      ...prev,
-      [product.id]: { ...product.defaults },
-    }));
-
-  const updateOrder = (key: keyof OrderMetadata, value: string) => {
-    setOrder((prev) => ({ ...prev, [key]: value }));
-  };
-
-  const handleShareImage = async () => {
-    setIsExporting(true);
-    try {
-      await shareOrDownloadImage(
-        wrapRef.current,
-        product.id,
-        product.label,
-        order
-      );
-    } finally {
-      setIsExporting(false);
-    }
-  };
-
+  const { inputsOk, outputs: o, checksOk, tooMany, canDraw } = evaluation;
+  const Drawing = getProductDrawing(product.id);
   const families: Array<"Vallas" | "Puertas"> = ["Vallas", "Puertas"];
-  const Drawing = product.Drawing;
 
   const renderFields = (fields: Field[], client: boolean) =>
     fields.map((f) => (
@@ -130,7 +71,7 @@ export default function ProductVisualizerPage() {
           value={v[f.key]}
           client={client}
           bad={!Number.isFinite(v[f.key])}
-          onChange={(n) => set(f.key, n)}
+          onChange={(n) => setField(f.key, n)}
         />
       </div>
     ));
@@ -229,7 +170,7 @@ export default function ProductVisualizerPage() {
           </fieldset>
 
           <div>
-            <button type="button" onClick={reset}>
+            <button type="button" onClick={resetValues}>
               Restablecer valores de ejemplo
             </button>
           </div>
@@ -249,7 +190,7 @@ export default function ProductVisualizerPage() {
 
               <button
                 type="button"
-                onClick={handleShareImage}
+                onClick={handleShare}
                 disabled={!canDraw || isExporting}
               >
                 {isExporting ? "Generando..." : "Compartir plano"}
@@ -312,8 +253,8 @@ export default function ProductVisualizerPage() {
           {inputsOk && (
             <table>
               <tbody>
-                {product.outputs.map((r) => (
-                  <tr key={r.key} className={r.main ? "main" : undefined}>
+                {product.outputs.map((r, index) => (
+                  <tr key={`${product.id}-${r.key}-${index}`} className={r.main ? "main" : undefined}>
                     <td>{r.label}</td>
                     <td className="n">{fmt(o[r.key])}</td>
                     <td className="u">{r.unit}</td>
