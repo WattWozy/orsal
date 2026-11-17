@@ -4,5 +4,6 @@ export type OrderMetadata = {
   orderDate: string;
   deliveryDate: string;
   customerName: string;
+  location: string;
   notes: string;
 };

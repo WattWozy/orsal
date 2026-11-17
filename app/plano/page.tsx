@@ -43,6 +43,7 @@ export default function ProductVisualizerPage() {
     orderDate: "",
     deliveryDate: "",
     customerName: "",
+    location: "",
     notes: "",
   });
 
@@ -174,6 +175,16 @@ export default function ProductVisualizerPage() {
                 type="date"
                 value={order.deliveryDate}
                 onChange={(e) => updateOrder("deliveryDate", e.target.value)}
+              />
+            </label>
+
+            <label className="sel">
+              Ubicación
+              <input
+                type="text"
+                value={order.location}
+                onChange={(e) => updateOrder("location", e.target.value)}
+                placeholder="Ubicación"
               />
             </label>
 

@@ -145,7 +145,7 @@ export function enrichSvg(
 
   // Move the original drawing into a translated group.
   const drawing = svgElement("g", {
-    transform: `translate(0 ${HEADER_HEIGHT - originalY})`,
+    transform: `translate(0 ${HEADER_HEIGHT + originalY})`,
   });
 
   const background = svgElement("rect", {
@@ -195,8 +195,25 @@ export function enrichSvg(
     { size: 16, weight: "bold" }
   );
 
+  // Location (Placed right next to or below customer info, adjusted to avoid overlap with dates)
+  const locationColumn = width * 0.32;
+
+  addText(header, "UBICACIÓN", locationColumn, 63, {
+    size: 10,
+    weight: "bold",
+    fill: MUTED,
+  });
+
+  addText(
+    header,
+    order.location.trim() || "Sin especificar",
+    locationColumn,
+    83,
+    { size: 14, weight: "bold" }
+  );
+
   // Dates.
-  const dateColumn = width * 0.53;
+  const dateColumn = width * 0.60;
 
   addText(header, "FECHA DE PEDIDO", dateColumn, 63, {
     size: 10,
