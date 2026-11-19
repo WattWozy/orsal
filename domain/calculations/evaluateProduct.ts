@@ -1,6 +1,6 @@
 import type { ProductDefinition, Values } from "@/domain/models/product";
 
-export const MAX_DRAW_POSTS = 15;
+export const MAX_DRAW_POSTS = 5;
 
 export interface EvaluationResult {
   inputsOk: boolean;
@@ -33,12 +33,18 @@ export function evaluateProduct(
     clientValuesValid &&
     product.checks.every((k) => Number.isFinite(outputs[k]) && outputs[k] > 0);
 
-  const tooMany =
-    product.family === "Vallas" &&
-    Number.isFinite(outputs.n) &&
-    outputs.n > MAX_DRAW_POSTS;
+  const postCount = Number.isFinite(outputs.pt)
+  ? outputs.pt
+  : Number.isFinite(outputs.n)
+  ? outputs.n
+  : outputs.v;
 
-  const canDraw = checksOk && !tooMany;
+const tooMany =
+    product.family === "Vallas" &&
+    Number.isFinite(postCount) &&
+    postCount > MAX_DRAW_POSTS;
+
+  const canDraw = checksOk;
 
   return { inputsOk, outputs, checksOk, tooMany, canDraw };
 }

@@ -10,6 +10,7 @@ import { FlexibleDrawing } from "./FlexibleDrawing";
 interface DrawingProps {
   v: Values;
   o: Values;
+  summarized?: boolean;
 }
 
 export function getProductDrawing(productId: string): (props: DrawingProps) => ReactElement {

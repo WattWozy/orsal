@@ -6,7 +6,6 @@ import { getProductDrawing } from "./renderers";
 import { useVisualizerState } from "./hooks/useVisualizerState";
 import { VISUALIZER_CSS } from "@/util/visualizerStyles";
 import { StripSvg, fmt } from "@/lib/scene";
-import { MAX_DRAW_POSTS } from "@/domain/calculations/evaluateProduct";
 
 function NumInput({
   value,
@@ -213,16 +212,16 @@ export default function ProductVisualizerPage() {
           )}
 
           {tooMany && (
-            <div className="warn">
-              Salen más de {MAX_DRAW_POSTS} paneles y el dibujo no sería
-              legible. Aumenta el ancho máximo de panel o reduce la longitud.
+            <div className="info">
+              Plano resumido: se muestran el primer y último tramo con el corte
+              intermedio ({o.pt ?? o.v} postes/vanos en total).
             </div>
           )}
 
           {canDraw && (
             <>
               <div className="sheet" ref={wrapRef}>
-                <Drawing v={v} o={o} />
+                <Drawing v={v} o={o} summarized={tooMany} />
               </div>
 
               <div className="legend" aria-hidden>

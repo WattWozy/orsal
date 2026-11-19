@@ -48,12 +48,12 @@ describe("evaluateProduct", () => {
     expect(result.canDraw).toBe(false);
   });
 
-  it("flags tooMany when a Vallas product exceeds MAX_DRAW_POSTS", () => {
+it("flags tooMany while still allowing summarized drawing when a Vallas product exceeds MAX_DRAW_POSTS", () => {
     const hugeLength = (MAX_DRAW_POSTS + 1) * 2500;
     const result = evaluateProduct(mockFenceProduct, { L: hugeLength, holgura: 10 });
 
     expect(result.checksOk).toBe(true);
     expect(result.tooMany).toBe(true);
-    expect(result.canDraw).toBe(false);
+    expect(result.canDraw).toBe(true);
   });
 });
