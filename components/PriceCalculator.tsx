@@ -199,12 +199,6 @@ export default function PriceCalculator() {
           {product.pricingConfigured ? (
             <>
               <div className="text-3xl font-black text-amber-500">~ {eur(totalEstimate)} €</div>
-              <span className="text-[11px] text-slate-500">
-                {eur(finalMaterialSalePrice)}€ materiales desglosados
-                {includeInstallation ? ` + ${eur(installationCost)}€ montaje` : ''}
-                {' · '}
-                {calculationDetail}
-              </span>
             </>
           ) : (
             <div className="text-xl font-bold text-slate-300">Precio bajo consulta</div>
