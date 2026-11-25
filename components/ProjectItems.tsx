@@ -4,7 +4,7 @@ import { fmt } from "@/lib/scene";
 import type { ProjectItem } from "@/domain/models/project";
 
 export function ProjectItems({
-  items, editingId, onEdit, onQty, onRemove, onClear, onShare, sharing
+  items, editingId, onEdit, onQty, onRemove, onClear
 }: {
   items: ProjectItem[];
   editingId: string | null;
@@ -12,8 +12,6 @@ export function ProjectItems({
   onQty: (id: string, q: number) => void;
   onRemove: (id: string) => void;
   onClear: () => void;
-  onShare: () => void; 
-  sharing: boolean;
 }) {
   const units = items.reduce((n, i) => n + i.quantity, 0);
 
@@ -22,12 +20,7 @@ export function ProjectItems({
       <div className="proj-head">
         <h2>Proyecto · {units} {units === 1 ? "ud." : "uds."}</h2>
         {items.length > 0 && (
-          <div className="proj-head-actions">
-            <button type="button" onClick={onShare} disabled={sharing}>
-              {sharing ? "Generando..." : "Compartir proyecto"}
-            </button>
-            <button type="button" onClick={onClear}>Vaciar</button>
-          </div>
+          <button type="button" onClick={onClear}>Vaciar</button>
         )}
       </div>
 

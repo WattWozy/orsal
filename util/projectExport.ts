@@ -45,20 +45,18 @@ export function buildProjectSvg(lines: ExportLine[], order: OrderMetadata): SVGS
     const family = product.family === "Vallas" ? "Valla" : "Puerta";
     addText(body, `${i + 1}. ${family} · ${product.label}`, TEXT_X, ty, { size: 15, weight: "bold" });
     addText(body, `× ${quantity}`, right, ty + 4, { size: 24, weight: "bold", anchor: "end" });
-    ty += 8;
+
+    ty += 8; // after the title line
 
     const maxChars = Math.floor((right - TEXT_X) / 6.4);
-    const groups: Array<[string, typeof product.client]> = [
-      ["Cliente", product.client],
-      ["Holguras", product.margins],
-    ];
-    for (const [name, fields] of groups) {
-      const text = `${name}: ` + fields.map((f) => `${f.label} ${fmt(values[f.key])}`).join(" · ");
-      wrapText(text, maxChars).forEach((l) => {
-        ty += LINE_H;
-        addText(body, l, TEXT_X, ty, { size: 11, fill: MUTED });
-      });
-    }
+    const marginsText =
+      "Holguras: " +
+      product.margins.map((f) => `${f.label} ${fmt(values[f.key])}`).join(" · ");
+
+    wrapText(marginsText, maxChars).forEach((l) => {
+      ty += LINE_H;
+      addText(body, l, TEXT_X, ty, { size: 11, fill: MUTED });
+    });
     ty += 8;
 
     if (!evaluation.checksOk) {

@@ -50,7 +50,8 @@ export default function ProductVisualizerPage() {
     setField,
     resetValues,
     handleShare,
-    isExportingProject, 
+    isExportingProject,
+    hasClient,
     handleShareProject,
     project, 
     editingId, 
@@ -100,9 +101,12 @@ export default function ProductVisualizerPage() {
               <legend>Datos del pedido</legend>
 
               <label className="sel">
-                Nombre del cliente
+                Nombre del cliente *
                 <input
                   type="text"
+                  className={hasClient ? undefined : "bad"}
+                  required
+                  aria-invalid={!hasClient}
                   value={order.customerName}
                   onChange={(e) => updateOrder("customerName", e.target.value)}
                   placeholder="Nombre del cliente"
@@ -182,18 +186,21 @@ export default function ProductVisualizerPage() {
                 type="button"
                 className="primary"
                 onClick={handleAdd}
-                disabled={!canDraw}
+                disabled={!canDraw || !hasClient}
               >
                 {editingId ? "Guardar cambios" : "Añadir al proyecto"}
               </button>
               {editingId && (
-                <button type="button" onClick={cancelEdit}>
-                  Cancelar edición
-                </button>
+                <button type="button" onClick={cancelEdit}>Cancelar edición</button>
               )}
               <button type="button" onClick={resetValues}>
                 Restablecer valores de ejemplo
               </button>
+              {!hasClient && (
+                <p className="hint">
+                  Indica el nombre del cliente para poder añadir productos al proyecto.
+                </p>
+              )}
             </div>
           </section>
 
@@ -204,8 +211,6 @@ export default function ProductVisualizerPage() {
             onQty={project.setQty}
             onRemove={project.remove}
             onClear={project.clear}
-            onShare={handleShareProject}
-            sharing={isExportingProject}
           />
         </div>
 
@@ -230,10 +235,11 @@ export default function ProductVisualizerPage() {
 
               <button
                 type="button"
-                onClick={handleShare}
-                disabled={!canDraw || isExporting}
+                onClick={handleShareProject}
+                disabled={project.items.length === 0 || isExportingProject}
+                title={project.items.length === 0 ? "Añade productos al proyecto primero" : undefined}
               >
-                {isExporting ? "Generando..." : "Compartir plano"}
+                {isExportingProject ? "Generando..." : "Compartir proyecto"}
               </button>
             </div>
           </div>

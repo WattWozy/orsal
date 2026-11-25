@@ -145,6 +145,7 @@ export const VISUALIZER_CSS = `
 
 .ov-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
 .ov-actions .primary { font-weight: 600; }
+.ov-actions .hint { flex-basis: 100%; margin: 0; font-size: 12px; color: #b3261e; }
 
 .ov-project {
 border: 1px solid #d9dee5;

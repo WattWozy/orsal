@@ -64,7 +64,10 @@ export function useVisualizerState() {
     setOrder((prev) => ({ ...prev, [key]: value }));
   };
 
+  const hasClient = order.customerName.trim().length > 0;
+
   const handleAdd = () => {
+    if (!hasClient) return;
     const payload = { productId: product.id, values: { ...v } };
     if (editingId) {
       project.replace(editingId, payload);
@@ -127,7 +130,8 @@ export function useVisualizerState() {
     setField,
     resetValues,
     handleShare,
-    isExportingProject, 
+    isExportingProject,
+    hasClient, 
     handleShareProject,
     project,
     editingId,
