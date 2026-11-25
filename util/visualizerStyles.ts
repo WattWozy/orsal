@@ -141,4 +141,42 @@ export const VISUALIZER_CSS = `
   vertical-align:-2px;
   margin-right:5px
 }
+.ov-side { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+
+.ov-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.ov-actions .primary { font-weight: 600; }
+
+.ov-project {
+border: 1px solid #d9dee5;
+border-radius: 10px;
+padding: 12px 14px;
+}
+.proj-head {
+display: flex; justify-content: space-between; align-items: center;
+margin-bottom: 10px;
+}
+.proj-head h2 { font-size: 15px; margin: 0; }
+.proj-empty { margin: 0; font-size: 13px; color: #5b6572; }
+
+.proj { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.proj li {
+display: grid;
+grid-template-columns: 1fr auto auto;
+gap: 4px 10px;
+align-items: center;
+padding: 8px 10px;
+border: 1px solid #e3e7ec;
+border-radius: 8px;
+}
+.proj li.editing { border-color: #2563eb; background: #eff5ff; }
+
+.proj-name {
+text-align: left; background: none; border: 0; padding: 0;
+font-weight: 600; cursor: pointer; min-width: 0;
+}
+.proj-meta { grid-column: 1 / -1; font-size: 12px; color: #5b6572; }
+
+.qty { display: flex; align-items: center; gap: 6px; }
+.qty button, .proj-del { width: 26px; height: 26px; padding: 0; line-height: 1; }
+.qty span { min-width: 20px; text-align: center; font-variant-numeric: tabular-nums; }
 `;

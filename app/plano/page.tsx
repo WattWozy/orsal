@@ -1,6 +1,7 @@
 "use client";
 
 import type { Field } from "@/domain/models/product";
+import {ProjectItems} from "@/components/ProjectItems";
 import { PRODUCTS } from "@/domain/catalog";
 import { getProductDrawing } from "./renderers";
 import { useVisualizerState } from "./hooks/useVisualizerState";
@@ -49,6 +50,11 @@ export default function ProductVisualizerPage() {
     setField,
     resetValues,
     handleShare,
+    project, 
+    editingId, 
+    handleAdd, 
+    handleEdit, 
+    cancelEdit,
   } = useVisualizerState();
 
   const { inputsOk, outputs: o, checksOk, tooMany, canDraw } = evaluation;
@@ -86,94 +92,118 @@ export default function ProductVisualizerPage() {
       </p>
 
       <div className="ov-grid">
-        <section className="ov-panel" aria-label="Datos del pedido y producto">
-          <fieldset>
-            <legend>Datos del pedido</legend>
+        <div className="ov-side">
+          <section className="ov-panel" aria-label="Datos del pedido y producto">
+            <fieldset>
+              <legend>Datos del pedido</legend>
+
+              <label className="sel">
+                Nombre del cliente
+                <input
+                  type="text"
+                  value={order.customerName}
+                  onChange={(e) => updateOrder("customerName", e.target.value)}
+                  placeholder="Nombre del cliente"
+                />
+              </label>
+
+              <label className="sel">
+                Fecha de pedido
+                <input
+                  type="date"
+                  value={order.orderDate}
+                  onChange={(e) => updateOrder("orderDate", e.target.value)}
+                />
+              </label>
+
+              <label className="sel">
+                Fecha de entrega
+                <input
+                  type="date"
+                  value={order.deliveryDate}
+                  onChange={(e) => updateOrder("deliveryDate", e.target.value)}
+                />
+              </label>
+
+              <label className="sel">
+                Ubicación
+                <input
+                  type="text"
+                  value={order.location}
+                  onChange={(e) => updateOrder("location", e.target.value)}
+                  placeholder="Ubicación"
+                />
+              </label>
+
+              <label className="sel">
+                Notas ({order.notes.length}/500)
+                <textarea
+                  maxLength={500}
+                  rows={4}
+                  value={order.notes}
+                  onChange={(e) => updateOrder("notes", e.target.value)}
+                  placeholder="Observaciones del pedido..."
+                />
+              </label>
+            </fieldset>
 
             <label className="sel">
-              Nombre del cliente
-              <input
-                type="text"
-                value={order.customerName}
-                onChange={(e) => updateOrder("customerName", e.target.value)}
-                placeholder="Nombre del cliente"
-              />
+              Producto
+              <select
+                value={productId}
+                onChange={(e) => setProductId(e.target.value)}
+              >
+                {families.map((fam) => (
+                  <optgroup key={fam} label={fam}>
+                    {PRODUCTS.filter((p) => p.family === fam).map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.label}
+                      </option>
+                    ))}
+                  </optgroup>
+                ))}
+              </select>
             </label>
 
-            <label className="sel">
-              Fecha de pedido
-              <input
-                type="date"
-                value={order.orderDate}
-                onChange={(e) => updateOrder("orderDate", e.target.value)}
-              />
-            </label>
+            <fieldset>
+              <legend>Medidas del cliente (mm)</legend>
+              {renderFields(product.client, true)}
+            </fieldset>
 
-            <label className="sel">
-              Fecha de entrega
-              <input
-                type="date"
-                value={order.deliveryDate}
-                onChange={(e) => updateOrder("deliveryDate", e.target.value)}
-              />
-            </label>
+            <fieldset>
+              <legend>Holguras y márgenes (mm)</legend>
+              {renderFields(product.margins, false)}
+            </fieldset>
 
-            <label className="sel">
-              Ubicación
-              <input
-                type="text"
-                value={order.location}
-                onChange={(e) => updateOrder("location", e.target.value)}
-                placeholder="Ubicación"
-              />
-            </label>
+            <div className="ov-actions">
+              <button
+                type="button"
+                className="primary"
+                onClick={handleAdd}
+                disabled={!canDraw}
+              >
+                {editingId ? "Guardar cambios" : "Añadir al proyecto"}
+              </button>
+              {editingId && (
+                <button type="button" onClick={cancelEdit}>
+                  Cancelar edición
+                </button>
+              )}
+              <button type="button" onClick={resetValues}>
+                Restablecer valores de ejemplo
+              </button>
+            </div>
+          </section>
 
-            <label className="sel">
-              Notas ({order.notes.length}/500)
-              <textarea
-                maxLength={500}
-                rows={4}
-                value={order.notes}
-                onChange={(e) => updateOrder("notes", e.target.value)}
-                placeholder="Observaciones del pedido..."
-              />
-            </label>
-          </fieldset>
-
-          <label className="sel">
-            Producto
-            <select
-              value={productId}
-              onChange={(e) => setProductId(e.target.value)}
-            >
-              {families.map((fam) => (
-                <optgroup key={fam} label={fam}>
-                  {PRODUCTS.filter((p) => p.family === fam).map((p) => (
-                    <option key={p.id} value={p.id}>
-                      {p.label}
-                    </option>
-                  ))}
-                </optgroup>
-              ))}
-            </select>
-          </label>
-
-          <fieldset>
-            <legend>Medidas del cliente (mm)</legend>
-            {renderFields(product.client, true)}
-          </fieldset>
-
-          <fieldset>
-            <legend>Holguras y márgenes (mm)</legend>
-            {renderFields(product.margins, false)}
-          </fieldset>
-
-          <div>
-            <button type="button" onClick={resetValues}>
-              Restablecer valores de ejemplo
-            </button>
-          </div>
-        </section>
+          <ProjectItems
+            items={project.items}
+            editingId={editingId}
+            onEdit={handleEdit}
+            onQty={project.setQty}
+            onRemove={project.remove}
+            onClear={project.clear}
+          />
+        </div>
 
         <section aria-label="Plano y resultados">
           <div className="sheetbar">
@@ -182,7 +212,14 @@ export default function ProductVisualizerPage() {
               {product.label}
             </h2>
 
-            <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+            <div
+              style={{
+                display: "flex",
+                gap: 10,
+                alignItems: "center",
+                flexWrap: "wrap",
+              }}
+            >
               <span className={"status " + (checksOk ? "ok" : "bad")}>
                 {checksOk ? "OK" : "REVISAR"}
               </span>
@@ -253,7 +290,10 @@ export default function ProductVisualizerPage() {
             <table>
               <tbody>
                 {product.outputs.map((r, index) => (
-                  <tr key={`${product.id}-${r.key}-${index}`} className={r.main ? "main" : undefined}>
+                  <tr
+                    key={`${product.id}-${r.key}-${index}`}
+                    className={r.main ? "main" : undefined}
+                  >
                     <td>{r.label}</td>
                     <td className="n">{fmt(o[r.key])}</td>
                     <td className="u">{r.unit}</td>
