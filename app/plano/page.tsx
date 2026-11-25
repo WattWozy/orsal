@@ -50,6 +50,8 @@ export default function ProductVisualizerPage() {
     setField,
     resetValues,
     handleShare,
+    isExportingProject, 
+    handleShareProject,
     project, 
     editingId, 
     handleAdd, 
@@ -202,6 +204,8 @@ export default function ProductVisualizerPage() {
             onQty={project.setQty}
             onRemove={project.remove}
             onClear={project.clear}
+            onShare={handleShareProject}
+            sharing={isExportingProject}
           />
         </div>
 

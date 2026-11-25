@@ -1,5 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { PRODUCTS } from "@/domain/catalog";
+import { shareOrDownloadProject, type ExportLine } from "@/util/projectExport";
+import { renderDrawingSvg } from "../lib/renderDrawingSvg";
 import { evaluateProduct } from "@/domain/calculations/evaluateProduct";
 import { localDateValue } from "@/util/dateHelpers";
 import { shareOrDownloadImage } from "@/util/svgExport";
@@ -37,6 +39,8 @@ export function useVisualizerState() {
   const v = all[product.id];
 
   const evaluation = useMemo(() => evaluateProduct(product, v), [product, v]);
+
+  const [isExportingProject, setIsExportingProject] = useState(false);
 
   // changing product manually leaves edit mode
   const setProductId = (id: string) => {
@@ -89,6 +93,27 @@ export function useVisualizerState() {
     }
   };
 
+  const handleShareProject = async () => {
+    setIsExportingProject(true);
+    try {
+      const lines: ExportLine[] = project.items.flatMap((it) => {
+        const p = PRODUCTS.find((x) => x.id === it.productId);
+        if (!p) return [];
+        const evaluation = evaluateProduct(p, it.values);
+        return [{
+          product: p,
+          values: it.values,
+          quantity: it.quantity,
+          evaluation,
+          drawing: evaluation.canDraw ? renderDrawingSvg(p, it.values, evaluation) : null,
+        }];
+      });
+      await shareOrDownloadProject(lines, order);
+    } finally {
+      setIsExportingProject(false);
+    }
+  };
+
   return {
     order,
     updateOrder,
@@ -102,7 +127,8 @@ export function useVisualizerState() {
     setField,
     resetValues,
     handleShare,
-    // project
+    isExportingProject, 
+    handleShareProject,
     project,
     editingId,
     handleAdd,
