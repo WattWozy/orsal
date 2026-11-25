@@ -212,6 +212,15 @@ export default function ProductVisualizerPage() {
             onRemove={project.remove}
             onClear={project.clear}
           />
+
+          <button
+                type="button"
+                onClick={handleShareProject}
+                disabled={project.items.length === 0 || isExportingProject}
+                title={project.items.length === 0 ? "Añade productos al proyecto primero" : undefined}
+              >
+                {isExportingProject ? "Generando..." : "Compartir proyecto"}
+          </button>
         </div>
 
         <section aria-label="Plano y resultados">
@@ -232,15 +241,6 @@ export default function ProductVisualizerPage() {
               <span className={"status " + (checksOk ? "ok" : "bad")}>
                 {checksOk ? "OK" : "REVISAR"}
               </span>
-
-              <button
-                type="button"
-                onClick={handleShareProject}
-                disabled={project.items.length === 0 || isExportingProject}
-                title={project.items.length === 0 ? "Añade productos al proyecto primero" : undefined}
-              >
-                {isExportingProject ? "Generando..." : "Compartir proyecto"}
-              </button>
             </div>
           </div>
 
